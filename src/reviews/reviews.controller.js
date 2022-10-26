@@ -16,7 +16,7 @@ async function list(req, res,next){
         const data = await service.reviewsForMovie(movieId);
         const reducedData = reduceCritics(data);
         console.log(reducedData);
-       res.json({data:reducedData})
+       res.json({data:reducedData});
     }
     else{
     const data = await service.list();
