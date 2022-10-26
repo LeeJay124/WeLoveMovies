@@ -32,4 +32,5 @@ res.json({data});
 module.exports = {
     list: asyncErrorBoundary(list),
     read: [asyncErrorBoundary(movieExists), read],
+    movieExists:[asyncErrorBoundary(movieExists)],
 }
