@@ -3,7 +3,6 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 async function list(req, res,next){
     const {is_showing} = req.query;
-    console.log(is_showing);
     if(is_showing == "true"){
          const data = await service.isShowing();
          res.json({data});
