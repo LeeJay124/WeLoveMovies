@@ -5,9 +5,9 @@ function list(){
 }
 function reviewsForMovie(movieId){
     return knex
-    .select("*")
+    .select("reviews.*", "critics.*")
     .from("reviews")
-    .join("critics", "critics.critic_id", "=", "reviews.critic_id")
+    .leftJoin("critics", "critics.critic_id", "=", "reviews.critic_id")
     .where({"reviews.movie_id": movieId});
 }
 
