@@ -1,7 +1,7 @@
 const service = require("./reviews.services");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const reduceProperties = require("../utils/reduce-properties");
-const { restart } = require("nodemon");
+
 const reduceCritics = reduceProperties("movie_id",{
     review_id: ["reviews", null, "review_id"],
     content: ["reviews", null, "content"],
