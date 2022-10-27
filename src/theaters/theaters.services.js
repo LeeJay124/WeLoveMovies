@@ -1,7 +1,7 @@
 const knex = require("../db/connection");
 
 function list(){
-    return knex("theaters").select("*")
+    return knex("theaters").select("theaters.*", "movies.title", "movies.rating", "movies.runtime_in_minutes")
     .join("movies_theaters", "movies_theaters.theater_id", "=", "theaters.theater_id")
     .join("movies", "movies.movie_id", "=", "movies_theaters.movie_id");
 }
