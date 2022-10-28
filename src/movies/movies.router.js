@@ -3,7 +3,10 @@ const controller = require("./movies.controller");
 const theaterRouter = require("../theaters/theaters.router");
 const reviewRouter = require("../reviews/reviews.router");
 const methodNotAllowed = require("../errors/methodNotAllowed");
+const cors = require("cors");
 
+
+router.use(cors());
 router.route("/").get(controller.list).all(methodNotAllowed);
 router.route("/:movieId").get(controller.read).all(methodNotAllowed);
 router.use("/:movieId/theaters", controller.movieExists, theaterRouter);
