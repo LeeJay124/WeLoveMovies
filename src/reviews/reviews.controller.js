@@ -1,34 +1,32 @@
 const service = require("./reviews.services");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
-const reduceProperties = require("../utils/reduce-properties");
 
-const reduceCritics = reduceProperties("movie_id",{
-    review_id: ["reviews", null, "review_id"],
-    content: ["reviews", null, "content"],
-    score: ["reviews", null, "score"], 
-    created_at: ["reviews", null, "created_at"],
-    updated_at: ["reviews", null, "updated_at"],
-    critic_id: ["reviews", null, "critic_id"],
-    movie_id: ["reviews", null, "movie_id"],
-    
-    critic_id: ["critic", null, "critic_id"],
-    preferred_name: ["critic", null, "preferred_name"],
-    surname: ["critic", null, "surname"],
-    organization_name: ["critic", null, "organization_name"],
-    created_at: ["critic", null, "created_at"],
-    updated_at: ["critic", null, "updated_at"]
-   
-  });
 
 async function list(req, res,next){
     const {movieId} = req.params;
     if(movieId){
         const data = await service.reviewsForMovie(movieId);
-      
-        const spreadData = [...data];
-        console.log(spreadData)
-       const formattedData = reduceCritics(spreadData);
-       res.json({data:formattedData});
+
+        const formattedReviews = data.map((item)=>{
+          return  {
+    review_id: item.review_id,
+    content: item.content,
+    score: item.score, 
+    created_at: item.created_at,
+    updated_at: item.updated_at,
+    critic_id: item.critic_id,
+    movie_id: item.movie_id,
+    critic: {
+    critic_id: item.critic_id,
+    preferred_name: item.preferred_name,
+    surname: item.surname,
+    organization_name: item.organization_name,
+    created_at: item.created_at,
+    updated_at: item.updated_at
+      }  }
+ 
+        })
+       res.json({data:formattedReviews});
     }
     else{
     const data = await service.list();

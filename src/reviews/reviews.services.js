@@ -5,10 +5,14 @@ function list(){
 }
 function reviewsForMovie(movieId){
     return knex
-    .select("reviews.*", "critics.*")
+    .select("reviews.review_id","reviews.content", 
+    "reviews.score", "reviews.created_at", "reviews.updated_at", 
+    "reviews.critic_id", "reviews.movie_id", "critics.critic_id", 
+    "critics.preferred_name", "critics.surname", "critics.created_at", "critics.updated_at", "critics.organization_name")
     .from("reviews")
     .leftJoin("critics", "critics.critic_id", "=", "reviews.critic_id")
-    .where({"reviews.movie_id": movieId});
+    .where({"reviews.movie_id": movieId})
+    
 }
 
 function read(reviewId){
