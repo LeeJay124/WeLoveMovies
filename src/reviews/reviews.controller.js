@@ -50,10 +50,11 @@ async function read(req, res, next){
 async function update(req, res) {
     const updatedReview = { ...res.locals.review, ...req.body.data };
     await service.update(updatedReview);
-    const reviewToReturn = await service.read(
+    const reviewToReturn = await service.updatedReviewWithCritic(
     res.locals.review.review_id
     );
-    //const formattedReview = reduceCritics(reviewToReturn);
+    console.log(reviewToReturn);
+    
     res.json({ data: reviewToReturn });
     }
 
