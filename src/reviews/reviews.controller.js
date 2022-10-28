@@ -53,7 +53,7 @@ async function update(req, res) {
     const reviewToReturn = await service.updatedReviewWithCritic(
     res.locals.review.review_id
     );
-    console.log(reviewToReturn);
+   
     
     res.json({ data: reviewToReturn });
     }
