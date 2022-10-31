@@ -1,15 +1,22 @@
-const path = require("path");
+if (process.env.USER) require("dotenv").config();
 
 require("dotenv").config();
 
+const path = require("path");
 const {
-  DATABASE_URL = "postgres://hhsbkbya:4VGUG6dZOCN3xaZB62SxD0AhRcWWkw1r@peanut.db.elephantsql.com/hhsbkbya",
+  NODE_ENV = "development",
+  DEVELOPMENT_DATABASE_URL,
+  PRODUCTION_DATABASE_URL,
 } = process.env;
+const URL =
+  NODE_ENV === "production"
+    ? PRODUCTION_DATABASE_URL
+    : DEVELOPMENT_DATABASE_URL;
 
 module.exports = {
   development: {
     client: "postgresql",
-    connection: DATABASE_URL,
+    connection: URL,
     pool: { min: 0, max: 5 },
     migrations: {
       directory: path.join(__dirname, "src", "db", "migrations"),
@@ -21,7 +28,7 @@ module.exports = {
 
   production: {
     client: "postgresql",
-    connection: DATABASE_URL,
+    connection: URL,
     pool: { min: 0, max: 5 },
     migrations: {
       directory: path.join(__dirname, "src", "db", "migrations"),
