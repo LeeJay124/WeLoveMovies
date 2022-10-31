@@ -1,8 +1,12 @@
 const knex = require("../db/connection");
 
+
+//Knex query to list reviews
 function list(){
     return knex("reviews").select("*");
 }
+
+//Knex query to list reviews for a specific movie
 function reviewsForMovie(movieId){
     return knex
     .select("reviews.review_id","reviews.content", 
@@ -15,6 +19,7 @@ function reviewsForMovie(movieId){
     
 }
 
+//Knex query to read a specific review based on review id provided
 function read(reviewId){
     return knex("reviews")
     .select("*")
@@ -22,6 +27,8 @@ function read(reviewId){
     .first();
 }
 
+
+//Knex query to update a specific review
 function update(updatedReview){
     return knex("reviews")
     .select("*")
@@ -29,6 +36,8 @@ function update(updatedReview){
     .update(updatedReview, ["content", "score"])
     .then((data)=> data[0]);
 }
+
+//Knex query to return updated review including the critic information
 function updatedReviewWithCritic(reviewId){
     return knex
     .select("reviews.review_id","reviews.content", 
@@ -58,6 +67,8 @@ function updatedReviewWithCritic(reviewId){
               }  }
     });
 }
+
+//Knex query to delete a review 
 function destroy(review_id){
     return knex("reviews").where({review_id}).del();
 }

@@ -1,7 +1,7 @@
 const service = require("./reviews.services");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
-
+//List reviews and group critic informaiton where movie id is provided
 async function list(req, res,next){
     const {movieId} = req.params;
     if(movieId){
@@ -33,6 +33,8 @@ async function list(req, res,next){
     res.json({data});
     }
 }
+
+//Check to see if a review exists
 async function reviewExists(req, res, next){
     const {reviewId}= req.params;
     const existingReview = await service.read(reviewId);
@@ -43,10 +45,13 @@ async function reviewExists(req, res, next){
     return next({status: 404, message: `Review cannot be found`});
 }
 
+//Read review based on local information from previous check review exists
 async function read(req, res, next){
     const {review} = res.locals;
     res.json({data:review});
 }
+
+//Update existing review and requery review to return updated data
 async function update(req, res) {
     const updatedReview = { ...res.locals.review, ...req.body.data };
     await service.update(updatedReview);
@@ -58,6 +63,7 @@ async function update(req, res) {
     res.json({ data: reviewToReturn });
     }
 
+//Delete review using local information from previous check review exists
 async function destroy(req, res, next){
     const {review} = res.locals;
     await service.delete(review.review_id);
